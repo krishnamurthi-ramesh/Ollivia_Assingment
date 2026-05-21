@@ -141,15 +141,14 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     raw_response = None
     last_error = None
     
-    # Define clients to try with correct new routing endpoint to avoid deprecated DNS resolution issues
+    # Define clients to try: primary authenticated client and unauthenticated fallback
     clients_to_try = [
-        InferenceClient(base_url="https://router.huggingface.co/hf-inference", token=HF_TOKEN),
-        InferenceClient(base_url="https://router.huggingface.co", token=HF_TOKEN),
-        InferenceClient(base_url="https://router.huggingface.co/hf-inference", token=None),
+        InferenceClient(token=HF_TOKEN),
+        InferenceClient(token=None),
     ]
     
     for client_idx, cl in enumerate(clients_to_try):
-        for attempt in range(2):  # Try twice per client configuration
+        for attempt in range(5):  # Try up to 5 times per client configuration to handle transient DNS errors robustly
             try:
                 completion = cl.chat.completions.create(
                     model=MODEL_ID,
@@ -164,7 +163,7 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
             except Exception as e:
                 last_error = e
                 # Wait briefly between retries to allow DNS/network to resolve
-                time.sleep(1.0)
+                time.sleep(2.0)
         if raw_response:
             break
             
