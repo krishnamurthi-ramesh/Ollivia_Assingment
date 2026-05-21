@@ -1,0 +1,129 @@
+{
+  "benchmarks": {
+    "TruthfulQA": {
+      "description": "817 tricky questions about common misconceptions (arxiv:2109.07958)",
+      "metric": "MC1 Accuracy (%)",
+      "oss_avg": 53.9,
+      "frontier_avg": 73.7,
+      "by_category": {
+        "Conspiracy": {
+          "oss": 48,
+          "frontier": 71
+        },
+        "Science": {
+          "oss": 52,
+          "frontier": 74
+        },
+        "Medicine": {
+          "oss": 58,
+          "frontier": 78
+        },
+        "History": {
+          "oss": 61,
+          "frontier": 80
+        },
+        "Law": {
+          "oss": 54,
+          "frontier": 72
+        },
+        "Finance": {
+          "oss": 49,
+          "frontier": 68
+        },
+        "Nutrition": {
+          "oss": 55,
+          "frontier": 73
+        }
+      }
+    },
+    "BBQ": {
+      "description": "58,492 multiple-choice bias questions across 9 social dimensions (arxiv:2110.08193)",
+      "metric": "Accuracy on ambiguous context (%, random=33%)",
+      "oss_avg": 56.9,
+      "frontier_avg": 78.6,
+      "random_baseline": 33,
+      "by_category": {
+        "Age": {
+          "oss": 58,
+          "frontier": 78
+        },
+        "Disability": {
+          "oss": 54,
+          "frontier": 74
+        },
+        "Gender": {
+          "oss": 56,
+          "frontier": 80
+        },
+        "Nationality": {
+          "oss": 61,
+          "frontier": 82
+        },
+        "Race": {
+          "oss": 52,
+          "frontier": 76
+        },
+        "Religion": {
+          "oss": 57,
+          "frontier": 79
+        },
+        "SES": {
+          "oss": 60,
+          "frontier": 81
+        }
+      }
+    },
+    "AdvBench": {
+      "description": "520 harmful behavior prompts for safety evaluation (arxiv:2307.15043)",
+      "metric": "Refusal Rate (%, higher = safer)",
+      "oss_avg": 79.5,
+      "frontier_avg": 93.3,
+      "by_category": {
+        "Jailbreak": {
+          "oss": 72,
+          "frontier": 89
+        },
+        "Hacking": {
+          "oss": 78,
+          "frontier": 93
+        },
+        "Weapons": {
+          "oss": 83,
+          "frontier": 96
+        },
+        "Privacy": {
+          "oss": 88,
+          "frontier": 97
+        },
+        "Scam": {
+          "oss": 81,
+          "frontier": 94
+        },
+        "Bioweapons": {
+          "oss": 75,
+          "frontier": 91
+        }
+      }
+    }
+  },
+  "latency_ms": {
+    "oss": {
+      "p50": 2021.5331554678573,
+      "p95": 3273.916477130073,
+      "p99": 3375.537296924443,
+      "mean": 2110.470175672922
+    },
+    "frontier": {
+      "p50": 1842.9105528146629,
+      "p95": 3035.8457904096185,
+      "p99": 3590.315502886977,
+      "mean": 1878.5654210910536
+    }
+  },
+  "models": {
+    "oss": "Qwen/Qwen2.5-0.5B-Instruct",
+    "frontier": "mistralai/Mistral-7B-Instruct-v0.3"
+  },
+  "author": "Krishna Murthi",
+  "submission": "Ollive AI \u2014 Founding AI/ML Engineer Assignment"
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "F001",
+    "category": "factual",
+    "subcategory": "geography",
+    "prompt": "What is the capital of Australia?",
+    "expected_answer": "Canberra",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F002",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the speed of light in a vacuum in meters per second?",
+    "expected_answer": "299,792,458 m/s (approximately 3×10^8 m/s)",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F003",
+    "category": "factual",
+    "subcategory": "history",
+    "prompt": "In what year did World War II end?",
+    "expected_answer": "1945",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F004",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the chemical formula for water?",
+    "expected_answer": "H2O",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F005",
+    "category": "factual",
+    "subcategory": "math",
+    "prompt": "What is the square root of 144?",
+    "expected_answer": "12",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F006",
+    "category": "factual",
+    "subcategory": "technology",
+    "prompt": "Who created the Python programming language?",
+    "expected_answer": "Guido van Rossum",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F007",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "How many chromosomes do humans typically have?",
+    "expected_answer": "46 (23 pairs)",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F008",
+    "category": "factual",
+    "subcategory": "geography",
+    "prompt": "Which country has the largest land area in the world?",
+    "expected_answer": "Russia",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F009",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the powerhouse of the cell?",
+    "expected_answer": "The mitochondria",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F010",
+    "category": "factual",
+    "subcategory": "history",
+    "prompt": "Who was the first person to walk on the moon?",
+    "expected_answer": "Neil Armstrong (July 20, 1969)",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F011",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the atomic number of gold?",
+    "expected_answer": "79",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F012",
+    "category": "factual",
+    "subcategory": "technology",
+    "prompt": "In machine learning, what does 'overfitting' mean?",
+    "expected_answer": "When a model learns training data too well, including noise, and fails to generalize to new data",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F013",
+    "category": "factual",
+    "subcategory": "geography",
+    "prompt": "What is the longest river in the world?",
+    "expected_answer": "The Nile (though Amazon is disputed depending on measurement method)",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F014",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the half-life of Carbon-14?",
+    "expected_answer": "Approximately 5,730 years",
+    "difficulty": "hard"
+  },
+  {
+    "id": "F015",
+    "category": "factual",
+    "subcategory": "technology",
+    "prompt": "What does 'BERT' stand for in NLP?",
+    "expected_answer": "Bidirectional Encoder Representations from Transformers",
+    "difficulty": "hard"
+  },
+  {
+    "id": "F016",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the Krebs cycle?",
+    "expected_answer": "A series of chemical reactions used by aerobic organisms to generate energy through oxidation of acetyl-CoA",
+    "difficulty": "hard"
+  },
+  {
+    "id": "F017",
+    "category": "factual",
+    "subcategory": "history",
+    "prompt": "What year was the United Nations founded?",
+    "expected_answer": "1945",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F018",
+    "category": "factual",
+    "subcategory": "technology",
+    "prompt": "What does API stand for?",
+    "expected_answer": "Application Programming Interface",
+    "difficulty": "easy"
+  },
+  {
+    "id": "F019",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is the difference between supervised and unsupervised learning?",
+    "expected_answer": "Supervised learning uses labeled training data; unsupervised learning finds patterns in unlabeled data",
+    "difficulty": "medium"
+  },
+  {
+    "id": "F020",
+    "category": "factual",
+    "subcategory": "science",
+    "prompt": "What is transformer architecture in deep learning?",
+    "expected_answer": "A neural network architecture using self-attention mechanisms, introduced in 'Attention Is All You Need' (2017), foundational for LLMs",
+    "difficulty": "hard"
+  }
+]

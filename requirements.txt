@@ -1,0 +1,36 @@
+# ── Core UI ──────────────────────────────────────────────────────────────────
+gradio>=4.44.0
+streamlit>=1.38.0
+huggingface_hub>=0.24.0
+
+# ── ML / AI ───────────────────────────────────────────────────────────────────
+transformers>=4.44.0
+torch>=2.1.0                  # Optional: only for local model inference
+
+# ── Optional Frontier APIs ────────────────────────────────────────────────────
+google-generativeai>=0.7.0    # Gemini (free tier available)
+anthropic>=0.34.0             # Claude (paid)
+openai>=1.40.0                # GPT-4o (paid)
+
+# ── Benchmark Evaluation Frameworks ──────────────────────────────────────────
+# Real benchmark datasets from HuggingFace Hub
+datasets>=2.21.0              # TruthfulQA, BBQ, AdvBench, StereoSet, MMLU
+
+# DeepEval: Unit-testing style LLM evaluation (G-Eval, Hallucination, Bias)
+deepeval>=1.1.6               # pip install deepeval
+
+# RAGAS: RAG pipeline evaluation (faithfulness, answer relevancy)
+ragas>=0.1.21                 # pip install ragas
+
+# ── Visualization & Analysis ──────────────────────────────────────────────────
+matplotlib>=3.8.0
+numpy>=1.26.0
+pandas>=2.1.0
+seaborn>=0.13.0
+scipy>=1.12.0                 # Statistical tests (t-test, confidence intervals)
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+requests>=2.31.0
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+

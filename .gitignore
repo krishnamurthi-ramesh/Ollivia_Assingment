@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.DS_Store
+*.log
+evaluation/results/*.json
+evaluation/results/*.csv
+observability/logs/
+report/test_chart.png
