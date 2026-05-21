@@ -99,7 +99,7 @@ def extract_and_run_tools(text: str) -> str:
         except Exception as e:
             result = f"Tool error: {str(e)}"
         
-        return f"\n📊 **Tool Result ({tool_name})**: {result}\n"
+        return f"\n**Tool Result ({tool_name})**: {result}\n"
     
     return tool_pattern.sub(execute_tool, text)
 
@@ -118,16 +118,16 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     Returns (updated_history, metrics_text, safety_badge).
     """
     if not user_message.strip():
-        return history, "", "✅ Safe"
+        return history, "", "Safe"
 
     # ── 1. Input Safety Check ──────────────────────────────────────────────
     safety = check_input_safety(user_message)
-    safety_badge = f"✅ Safe" if safety.is_safe else f"🚨 Blocked ({safety.category})"
+    safety_badge = f"Safe" if safety.is_safe else f"Blocked ({safety.category})"
 
     if not safety.is_safe:
         refusal = get_refusal_message(safety.category)
         history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": f"🛡️ {refusal}"})
+        history.append({"role": "assistant", "content": refusal})
         return history, "", safety_badge
 
     # ── 2. Add to memory ───────────────────────────────────────────────────
@@ -141,11 +141,11 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     raw_response = None
     last_error = None
     
-    # Define clients to try: default, router proxy, and unauthenticated fallback
+    # Define clients to try with correct new routing endpoint to avoid deprecated DNS resolution issues
     clients_to_try = [
-        InferenceClient(token=HF_TOKEN),
+        InferenceClient(base_url="https://router.huggingface.co/hf-inference", token=HF_TOKEN),
         InferenceClient(base_url="https://router.huggingface.co", token=HF_TOKEN),
-        InferenceClient(token=None),
+        InferenceClient(base_url="https://router.huggingface.co/hf-inference", token=None),
     ]
     
     for client_idx, cl in enumerate(clients_to_try):
@@ -169,7 +169,7 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
             break
             
     if not raw_response:
-        raw_response = f"⚠️ Model error: {str(last_error)}\n\nI'm experiencing technical difficulties. Please try again."
+        raw_response = f"Model error: {str(last_error)}\n\nI'm experiencing technical difficulties. Please try again."
 
     latency_ms = (time.time() - start_time) * 1000
 
@@ -179,7 +179,7 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     # ── 6. Output Safety Check ─────────────────────────────────────────────
     is_output_safe, final_response = check_output_safety(response_with_tools)
     if not is_output_safe:
-        final_response = "🛡️ " + final_response
+        final_response = final_response
 
     # ── 7. Update memory ───────────────────────────────────────────────────
     memory.add_assistant_message(final_response)
@@ -189,10 +189,10 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     metrics_text = ""
     if show_metrics:
         metrics_text = (
-            f"⏱️ **Latency**: {latency_ms:.0f}ms | "
-            f"📝 **Tokens (est.)**: {metrics['estimated_tokens']} | "
-            f"💰 **Cost**: Free (OSS) | "
-            f"🧠 **Context**: {len(memory.messages)} messages"
+            f"Latency: {latency_ms:.0f}ms | "
+            f"Tokens (est.): {metrics['estimated_tokens']} | "
+            f"Cost: Free (OSS) | "
+            f"Context: {len(memory.messages)} messages"
         )
 
     # ── 9. Update Gradio history ───────────────────────────────────────────
@@ -204,7 +204,7 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
 
 def clear_conversation():
     memory.clear()
-    return [], "", "✅ Safe"
+    return [], "", "Safe"
 
 
 def export_conversation():
@@ -301,7 +301,7 @@ def build_ui():
         gr.HTML("""
         <div class="header-box">
             <h1 style="color:white; margin:0; font-size:28px; font-weight:700;">
-                🤖 OSS AI Assistant
+                OSS AI Assistant
             </h1>
             <p style="color:rgba(255,255,255,0.8); margin:8px 0 0; font-size:15px;">
                 Powered by <strong>Qwen2.5-0.5B-Instruct</strong> · Multi-turn Memory · Tools · Safety Guardrails
@@ -332,31 +332,31 @@ def build_ui():
                         container=False,
                         lines=1,
                     )
-                    send_btn = gr.Button("Send ➤", variant="primary", scale=1, min_width=80)
+                    send_btn = gr.Button("Send", variant="primary", scale=1, min_width=80)
 
                 metrics_box = gr.Markdown("", elem_classes=["metric-bar"])
 
             with gr.Column(scale=1):
-                gr.Markdown("### ⚙️ Controls")
+                gr.Markdown("### Controls")
                 show_metrics = gr.Checkbox(label="Show metrics", value=True)
                 safety_badge = gr.Textbox(
-                    value="✅ Safe",
+                    value="Safe",
                     label="Safety Status",
                     interactive=False,
                     max_lines=1,
                 )
 
-                gr.Markdown("### 📊 Memory")
+                gr.Markdown("### Memory")
                 memory_info = gr.JSON(
                     label="Context Stats",
                     value={"turns": 0, "messages": 0}
                 )
 
-                clear_btn = gr.Button("🗑️ Clear Chat", variant="secondary")
-                export_btn = gr.Button("📥 Export JSON", variant="secondary")
+                clear_btn = gr.Button("Clear Chat", variant="secondary")
+                export_btn = gr.Button("Export JSON", variant="secondary")
                 export_box = gr.Code(visible=False, language="json", label="Exported Conversation")
 
-        gr.Markdown("### 💡 Try these examples:")
+        gr.Markdown("### Try these examples:")
         gr.Examples(
             examples=EXAMPLES,
             inputs=msg_input,

@@ -62,7 +62,6 @@ After tool results are shown, continue your response naturally and helpfully."""
 
 st.set_page_config(
     page_title="Frontier AI Assistant",
-    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -245,7 +244,7 @@ def extract_and_run_tools(text: str) -> str:
                 result = f"Unknown tool: {tool_name}"
         except Exception as e:
             result = f"Tool error: {str(e)}"
-        return f"\n\n> 🔧 **Tool: `{tool_name}`** → {result}\n\n"
+        return f"\n\n> **Tool: `{tool_name}`** → {result}\n\n"
 
     return tool_pattern.sub(execute_tool, text)
 
@@ -291,7 +290,7 @@ def generate_response(messages: list) -> tuple[str, float]:
         else:
             response = call_hf_inference(messages)
     except Exception as e:
-        response = f"⚠️ I encountered an error: {str(e)}\n\nPlease try again or check your connection."
+        response = f"I encountered an error: {str(e)}\n\nPlease try again or check your connection."
     latency = (time.time() - start) * 1000
     return response, latency
 
@@ -303,7 +302,6 @@ def generate_response(messages: list) -> tuple[str, float]:
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 20px 0 10px;">
-        <div style="font-size:48px; margin-bottom:8px;">⚡</div>
         <h2 style="color:#a78bfa; margin:0; font-weight:700;">Frontier AI</h2>
         <p style="color:#6b7280; font-size:13px; margin-top:4px;">Personal Assistant</p>
     </div>
@@ -312,15 +310,15 @@ with st.sidebar:
     st.divider()
 
     # Model info
-    st.markdown("**🤖 Model**")
-    model_badge = "🌟 Gemini 1.5 Flash" if USE_GEMINI else "🔷 Mistral-7B-Instruct"
+    st.markdown("**Model**")
+    model_badge = "Gemini 1.5 Flash" if USE_GEMINI else "Mistral-7B-Instruct"
     st.info(f"{model_badge}")
     st.caption(f"ID: `{MODEL_NAME}`")
 
     st.divider()
 
     # Live Metrics
-    st.markdown("**📊 Session Metrics**")
+    st.markdown("**Session Metrics**")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -349,11 +347,11 @@ with st.sidebar:
     st.divider()
 
     # Controls
-    st.markdown("**⚙️ Controls**")
+    st.markdown("**Controls**")
     show_metrics = st.toggle("Show response metrics", value=True)
     show_safety = st.toggle("Show safety analysis", value=False)
 
-    if st.button("🗑️ Clear Conversation", use_container_width=True):
+    if st.button("Clear Conversation", use_container_width=True):
         st.session_state.memory.clear()
         st.session_state.messages = []
         st.session_state.total_latency = []
@@ -361,7 +359,7 @@ with st.sidebar:
         st.session_state.safety_events = []
         st.rerun()
 
-    if st.button("📥 Export Conversation", use_container_width=True):
+    if st.button("Export Conversation", use_container_width=True):
         data = st.session_state.memory.to_json()
         st.download_button(
             "Download JSON",
@@ -395,7 +393,7 @@ st.markdown("""
         background: linear-gradient(135deg, #7c3aed, #a78bfa, #c4b5fd);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-    ">⚡ Frontier AI Assistant</h1>
+    ">Frontier AI Assistant</h1>
     <p style="color: #9ca3af; margin: 8px 0 0; font-size: 15px;">
         Advanced AI with Memory · Tools · Safety · Observability
     </p>
@@ -404,14 +402,14 @@ st.markdown("""
 
 # Display chat history
 for msg in st.session_state.messages:
-    with st.chat_message(msg["role"], avatar="🧑‍💻" if msg["role"] == "user" else "⚡"):
+    with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
         if show_metrics and msg.get("metrics"):
             m = msg["metrics"]
             st.caption(
-                f"⏱️ {m.get('latency_ms', 0):.0f}ms · "
-                f"📝 ~{m.get('tokens', 0)} tokens · "
-                f"🛡️ {m.get('safety_category', 'safe')}"
+                f"Latency: {m.get('latency_ms', 0):.0f}ms · "
+                f"Tokens: ~{m.get('tokens', 0)} · "
+                f"Safety Status: {m.get('safety_category', 'safe')}"
             )
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -425,26 +423,26 @@ if user_input := st.chat_input("Ask me anything... (try math, questions, or code
 
     if show_safety:
         badge_class = "safe-badge" if safety.is_safe else "safe-badge unsafe-badge"
-        badge_text = f"✅ {safety.reason}" if safety.is_safe else f"🚨 {safety.reason}"
+        badge_text = f"Safe: {safety.reason}" if safety.is_safe else f"Blocked: {safety.reason}"
         st.markdown(f'<div class="{badge_class}">{badge_text}</div>', unsafe_allow_html=True)
 
     if not safety.is_safe:
         st.session_state.safety_events.append(safety)
         refusal = get_refusal_message(safety.category)
 
-        with st.chat_message("user", avatar="🧑‍💻"):
+        with st.chat_message("user"):
             st.markdown(user_input)
 
-        with st.chat_message("assistant", avatar="⚡"):
-            st.markdown(f"🛡️ {refusal}")
+        with st.chat_message("assistant"):
+            st.markdown(f"Safety Blocked: {refusal}")
 
         st.session_state.messages.append({"role": "user", "content": user_input})
-        st.session_state.messages.append({"role": "assistant", "content": f"🛡️ {refusal}"})
+        st.session_state.messages.append({"role": "assistant", "content": f"Safety Blocked: {refusal}"})
         st.rerun()
 
     else:
         # ── Display user message ───────────────────────────────────────────
-        with st.chat_message("user", avatar="🧑‍💻"):
+        with st.chat_message("user"):
             st.markdown(user_input)
 
         # ── Update memory ──────────────────────────────────────────────────
@@ -452,7 +450,7 @@ if user_input := st.chat_input("Ask me anything... (try math, questions, or code
         messages = st.session_state.memory.get_full_prompt()
 
         # ── Generate response with streaming indicator ─────────────────────
-        with st.chat_message("assistant", avatar="⚡"):
+        with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 raw_response, latency_ms = generate_response(messages)
 
@@ -462,7 +460,7 @@ if user_input := st.chat_input("Ask me anything... (try math, questions, or code
             # ── Output safety check ────────────────────────────────────────
             is_safe, final_response = check_output_safety(response_with_tools)
             if not is_safe:
-                final_response = "🛡️ " + final_response
+                final_response = "Safety Blocked: " + final_response
 
             st.markdown(final_response)
 
@@ -479,9 +477,9 @@ if user_input := st.chat_input("Ask me anything... (try math, questions, or code
 
             if show_metrics:
                 st.caption(
-                    f"⏱️ {latency_ms:.0f}ms · 📝 ~{est_tokens} tokens · "
-                    f"💰 {'Free (OSS)' if not USE_GEMINI else 'Gemini Free'} · "
-                    f"🛡️ {safety.category}"
+                    f"Latency: {latency_ms:.0f}ms · Tokens: ~{est_tokens} · "
+                    f"Cost: {'Free (OSS)' if not USE_GEMINI else 'Gemini Free'} · "
+                    f"Safety: {safety.category}"
                 )
 
         # ── Update state ───────────────────────────────────────────────────
