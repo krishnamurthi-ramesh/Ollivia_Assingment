@@ -6,7 +6,7 @@ colorTo: indigo
 sdk: gradio
 sdk_version: 4.44.0
 python_version: "3.10"
-app_file: app.py
+app_file: bootstrap.py
 pinned: true
 license: mit
 short_description: Personal AI assistant powered by Qwen2.5-0.5B

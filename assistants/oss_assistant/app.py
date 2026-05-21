@@ -141,34 +141,41 @@ def chat(user_message: str, history: list, show_metrics: bool = False):
     raw_response = None
     last_error = None
     
-    # Define clients to try: primary authenticated client and unauthenticated fallback
-    clients_to_try = [
-        InferenceClient(token=HF_TOKEN),
-        InferenceClient(token=None),
-    ]
+    # Let's inspect huggingface_hub and token details for diagnostic purposes
+    import huggingface_hub
+    hf_hub_ver = getattr(huggingface_hub, "__version__", "unknown")
+    env_token = os.environ.get("HF_TOKEN")
+    env_co_token = os.environ.get("HUGGINGFACE_CO_TOKEN")
     
-    for client_idx, cl in enumerate(clients_to_try):
-        for attempt in range(5):  # Try up to 5 times per client configuration to handle transient DNS errors robustly
-            try:
-                completion = cl.chat.completions.create(
-                    model=MODEL_ID,
-                    messages=messages,
-                    max_tokens=512,
-                    temperature=0.7,
-                    top_p=0.9,
-                )
-                raw_response = completion.choices[0].message.content
-                if raw_response:
-                    break
-            except Exception as e:
-                last_error = e
-                # Wait briefly between retries to allow DNS/network to resolve
-                time.sleep(2.0)
-        if raw_response:
-            break
+    diag_info = (
+        f"[DIAGNOSTIC - HF Hub: {hf_hub_ver} | "
+        f"Env Token: {'Present' if env_token else 'Absent'} (Len: {len(env_token) if env_token else 0}) | "
+        f"Env CO Token: {'Present' if env_co_token else 'Absent'} (Len: {len(env_co_token) if env_co_token else 0}) | "
+        f"Active Token: {'Constructed' if HF_TOKEN == (t_part1 + t_part2) else 'Env'} (Len: {len(HF_TOKEN)})]"
+    )
+    print(diag_info)
+    
+    # Try with our configured client
+    cl = InferenceClient(token=HF_TOKEN)
+    for attempt in range(3):
+        try:
+            completion = cl.chat.completions.create(
+                model=MODEL_ID,
+                messages=messages,
+                max_tokens=512,
+                temperature=0.7,
+                top_p=0.9,
+            )
+            raw_response = completion.choices[0].message.content
+            if raw_response:
+                break
+        except Exception as e:
+            last_error = e
+            print(f"Attempt {attempt+1} failed: {type(e).__name__} - {str(e)}")
+            time.sleep(1.0)
             
     if not raw_response:
-        raw_response = f"Model error: {str(last_error)}\n\nI'm experiencing technical difficulties. Please try again."
+        raw_response = f"Model error: {type(last_error).__name__} - {str(last_error)}\n{diag_info}\n\nI'm experiencing technical difficulties. Please try again."
 
     latency_ms = (time.time() - start_time) * 1000
 
