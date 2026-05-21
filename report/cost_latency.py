@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from observability.metrics import generate_cost_latency_table
 
 MODELS = [
-    "Qwen/Qwen2.5-0.5B-Instruct",
+    "Qwen/Qwen2.5-7B-Instruct",
     "mistralai/Mistral-7B-Instruct-v0.3",
     "gemini-1.5-flash",
     "claude-3-5-sonnet",

@@ -9,16 +9,16 @@ python_version: "3.10"
 app_file: bootstrap.py
 pinned: true
 license: mit
-short_description: Personal AI assistant powered by Qwen2.5-0.5B
+short_description: Personal AI assistant powered by Qwen2.5-7B
 ---
 
-# OSS AI Assistant — Qwen2.5-0.5B-Instruct
+# OSS AI Assistant — Qwen2.5-7B-Instruct
 
-A personal AI assistant built with **Qwen2.5-0.5B-Instruct** featuring:
-- 🧠 Multi-turn conversational memory (sliding window)
-- 🛠️ Tool use: calculator, web search, date/time, unit converter  
-- 🛡️ Safety guardrails: jailbreak detection, harmful content filtering
-- 📊 Real-time observability metrics
+A personal AI assistant built with Qwen2.5-7B-Instruct featuring:
+- Multi-turn conversational memory (sliding window)
+- Tool use: calculator, web search, date/time, unit converter
+- Safety guardrails: jailbreak detection, harmful content filtering
+- Real-time observability metrics
 
 ## How to Use
 

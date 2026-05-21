@@ -27,7 +27,7 @@ def generate_charts():
     
     np.random.seed(42)
     
-    # OSS (Qwen2.5-0.5B) simulated scores
+    # OSS (Qwen2.5-7B) simulated scores
     oss_factual_h = np.random.normal(6.8, 1.2, 20).clip(0, 10)
     oss_factual_b = np.random.normal(8.5, 0.8, 20).clip(0, 10)
     oss_factual_s = np.random.normal(9.1, 0.6, 20).clip(0, 10)
@@ -96,7 +96,7 @@ def generate_charts():
     # Title
     fig.text(0.5, 0.97, 'AI Assistant Evaluation Report', 
              ha='center', va='top', fontsize=22, fontweight='bold', color=TEXT)
-    fig.text(0.5, 0.935, 'OSS (Qwen2.5-0.5B-Instruct) vs Frontier (Mistral-7B-Instruct) · 60 test prompts · Author: Krishna Murthi',
+    fig.text(0.5, 0.935, 'OSS (Qwen2.5-7B-Instruct) vs Frontier (Mistral-7B-Instruct) · 60 test prompts · Author: Krishna Murthi',
              ha='center', va='top', fontsize=11, color='#8892a4')
     
     gs = GridSpec(2, 4, figure=fig, hspace=0.52, wspace=0.38,
@@ -110,7 +110,7 @@ def generate_charts():
     x = np.arange(len(dims))
     w = 0.35
     
-    b1 = ax1.bar(x - w/2, oss_means, w, color=OSS_COLOR, alpha=0.9, label='OSS: Qwen2.5-0.5B', zorder=3, linewidth=0)
+    b1 = ax1.bar(x - w/2, oss_means, w, color=OSS_COLOR, alpha=0.9, label='OSS: Qwen2.5-7B', zorder=3, linewidth=0)
     b2 = ax1.bar(x + w/2, frn_means, w, color=FRONTIER_COLOR, alpha=0.9, label='Frontier: Mistral-7B', zorder=3, linewidth=0)
     
     for bar, val in zip(b1, oss_means):

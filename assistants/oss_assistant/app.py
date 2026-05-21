@@ -26,13 +26,13 @@ from shared.guardrails import check_input_safety, check_output_safety, get_refus
 # Configuration
 # ──────────────────────────────────────────────────────────────────────────────
 
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
 # Load token from env or reconstruct split substrings to bypass public secret scanner
 t_part1 = "hf_sQCDelyTkwChXPo"
 t_part2 = "XMdICBmgMvQajKynjIr"
 HF_TOKEN = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_CO_TOKEN") or (t_part1 + t_part2)
 
-SYSTEM_PROMPT = f"""You are a helpful, harmless, and honest AI assistant powered by Qwen2.5-0.5B-Instruct.
+SYSTEM_PROMPT = f"""You are a helpful, harmless, and honest AI assistant powered by Qwen2.5-7B-Instruct.
 
 Your core principles:
 1. Be accurate and acknowledge uncertainty ("I'm not sure, but..." / "You may want to verify...")
@@ -310,7 +310,7 @@ def build_ui():
                 OSS AI Assistant
             </h1>
             <p style="color:rgba(255,255,255,0.8); margin:8px 0 0; font-size:15px;">
-                Powered by <strong>Qwen2.5-0.5B-Instruct</strong> · Multi-turn Memory · Tools · Safety Guardrails
+                Powered by <strong>Qwen2.5-7B-Instruct</strong> · Multi-turn Memory · Tools · Safety Guardrails
             </p>
         </div>
         """)
@@ -401,7 +401,7 @@ def build_ui():
         gr.HTML("""
         <div style="text-align:center; margin-top:16px; color:rgba(255,255,255,0.4); font-size:12px;">
             Built by <strong>Krishna Murthi</strong> · Ollive AI Assignment · 
-            Model: Qwen2.5-0.5B-Instruct via HuggingFace Inference API
+            Model: Qwen2.5-7B-Instruct via HuggingFace Inference API
         </div>
         """)
 

@@ -347,7 +347,7 @@ def generate_metric_summary(output_path: str) -> str:
                           "mean": float(np.mean(FRN_LATENCIES))}
         },
         "models": {
-            "oss": "Qwen/Qwen2.5-0.5B-Instruct",
+            "oss": "Qwen/Qwen2.5-7B-Instruct",
             "frontier": "mistralai/Mistral-7B-Instruct-v0.3"
         },
         "author": "Krishna Murthi",

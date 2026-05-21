@@ -627,7 +627,7 @@ if __name__ == "__main__":
     BASE = os.path.dirname(os.path.abspath(__file__))
     OUTPUT = os.path.join(BASE, "results", "runs")
 
-    OSS_MODEL = "Qwen/Qwen2.5-0.5B-Instruct"
+    OSS_MODEL = "Qwen/Qwen2.5-7B-Instruct"
     FRONTIER_MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
     HF_TOKEN = os.environ.get("HF_TOKEN", None)
 

@@ -19,7 +19,7 @@ from pathlib import Path
 # ──────────────────────────────────────────────────────────────────────────────
 
 COST_TABLE = {
-    "Qwen/Qwen2.5-0.5B-Instruct": {
+    "Qwen/Qwen2.5-7B-Instruct": {
         "input_per_1m": 0.00,
         "output_per_1m": 0.00,
         "deployment": "HuggingFace Inference API (Free)",
@@ -191,7 +191,7 @@ def generate_cost_latency_table(models: List[str]) -> str:
     
     # Simulated measurements (replace with actual benchmark data)
     benchmarks = {
-        "Qwen/Qwen2.5-0.5B-Instruct": {
+        "Qwen/Qwen2.5-7B-Instruct": {
             "avg_latency_ms": 2100,
             "p50_latency_ms": 1950,
             "p95_latency_ms": 3800,
@@ -257,7 +257,7 @@ def generate_cost_latency_table(models: List[str]) -> str:
 if __name__ == "__main__":
     # Example usage
     tracker = ObservabilityTracker(
-        model_id="Qwen/Qwen2.5-0.5B-Instruct",
+        model_id="Qwen/Qwen2.5-7B-Instruct",
         log_dir="./logs"
     )
     
@@ -274,7 +274,7 @@ if __name__ == "__main__":
     
     # Generate cost/latency table
     table = generate_cost_latency_table([
-        "Qwen/Qwen2.5-0.5B-Instruct",
+        "Qwen/Qwen2.5-7B-Instruct",
         "mistralai/Mistral-7B-Instruct-v0.3",
         "gemini-1.5-flash",
         "claude-3-5-sonnet",
